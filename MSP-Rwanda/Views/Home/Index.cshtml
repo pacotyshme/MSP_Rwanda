@@ -1,0 +1,25 @@
+﻿@model IEnumerable<MSP_Rwanda.TableModel.StudentModel>
+
+@{
+    ViewBag.Title = "Student List";
+    var grid = new WebGrid(source: Model, canPage: true, canSort: true, rowsPerPage: 10);
+}
+<h5>Contact List</h5>
+
+<div style="overflow:auto">
+
+    @grid.GetHtml(
+                    tableStyle: "table table-responsive",
+                    columns: grid.Columns
+                        (
+                                    grid.Column("StudentFName", "First Name"),
+                                    grid.Column("StudentLName", "Last Name"),
+                                    grid.Column("ContactNumber", "Contact No1"),
+                                    grid.Column("EmailID", "Contact No2"),
+                            grid.Column(header: "Image", format: @<text>@Html.Raw((item.ImagePath == null ? "" : "<img width='100' alt='' src='/image/" + item.ProfilePic + "'"))</text>),
+                                             grid.Column(header: "View", format: (item) => Html.ActionLink("View", "View", "Home", new { id = item.ContactID }, null)),
+                                             grid.Column(header: "Edit", format: (item) => Html.ActionLink("Edit", "Edit", "Home", new { id = item.ContactID }, null)),
+                                             grid.Column(header: "Delete", format: (item) => Html.ActionLink("Delete", "Delete", "Home", new { id = item.ContactID }, null))
+                                         )
+                                     )
+</div>
